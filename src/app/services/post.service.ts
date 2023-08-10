@@ -6,26 +6,27 @@ import {Observable} from "rxjs";
   providedIn: 'root'
 })
 export class PostService {
+  private baseURL = 'https://jsonplaceholder.typicode.com';
 
   constructor(private http:HttpClient) { }
 
   findAll():Observable<any>{
-    return  this.http.get<any>("https://jsonplaceholder.typicode.com/posts")
+    return  this.http.get<any>(this.baseURL+"/posts")
   }
   find(id:any):Observable<any>{
-    return  this.http.get<any>("https://jsonplaceholder.typicode.com/posts?id="+id)
+    return  this.http.get<any>(this.baseURL+"/posts?id="+id)
   }
   create(id:any,userId:any,title:any,body:any):Observable<any>{
-    return  this.http.post<any>("https://jsonplaceholder.typicode.com/posts",{
+    return  this.http.post<any>(this.baseURL+"/posts",{
       id,userId,title,body
     })
   }
   update(id:any, userId:any,title:any ,body:any):Observable<any>{
-    return  this.http.put<any>("https://jsonplaceholder.typicode.com/posts",{
+    return  this.http.put<any>(this.baseURL+"/posts",{
       id,userId,title,body
     })
   }
   delete(id:any):Observable<any>{
-    return  this.http.get<any>("https://jsonplaceholder.typicode.com/posts/"+id)
+    return  this.http.get<any>(this.baseURL+"/posts/"+id)
   }
 }
