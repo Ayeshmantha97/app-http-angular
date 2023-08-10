@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
-import {HttpClient} from "@angular/common/http";
-import {MatSnackBar} from "@angular/material/snack-bar";
 import {PostService} from "../../services/post.service";
+import {SnacBarService} from "../../services/snac-bar.service";
 
 @Component({
   selector: 'app-delete',
@@ -10,7 +9,7 @@ import {PostService} from "../../services/post.service";
 })
 export class DeleteComponent {
   list : Array<any> = [];
-  constructor(private postServices:PostService,private _snackBar:MatSnackBar) {
+  constructor(private postServices:PostService,private _snackBar:SnacBarService) {
   }
   ngOnInit(): void {
     this.postServices.findAll().subscribe(response=>{
@@ -22,12 +21,7 @@ export class DeleteComponent {
     if(confirm("Are you sure" +id)){
       this.postServices.delete(id).subscribe(response=>{
         if (response) {
-          this._snackBar.open('Deleted', 'close', {
-            horizontalPosition: "end",
-            verticalPosition: "bottom",
-            duration: 5000,
-            direction: "ltr"
-          });
+          this._snackBar.trigger('deleted', 'close');
           for (let i = 0; i < this.list.length; i++) {
             if(this.list[i].id == id){
               this.list.splice(i,1)

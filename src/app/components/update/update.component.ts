@@ -1,8 +1,7 @@
 import { Component } from '@angular/core';
-import {HttpClient} from "@angular/common/http";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {MatSnackBar} from "@angular/material/snack-bar";
 import {PostService} from "../../services/post.service";
+import {SnacBarService} from "../../services/snac-bar.service";
 
 @Component({
   selector: 'app-update',
@@ -12,7 +11,7 @@ import {PostService} from "../../services/post.service";
 export class UpdateComponent {
   searchId = '';
 
-  constructor(private postService:PostService, private _snackBar: MatSnackBar) {
+  constructor(private postService:PostService, private _snackBar: SnacBarService) {
   }
 
   form = new FormGroup({
@@ -32,12 +31,7 @@ export class UpdateComponent {
 
     this.postService.update(data.id,data.userId,data.title,data.body).subscribe(response => {
       if (response) {
-        this._snackBar.open('Updated', 'close', {
-          horizontalPosition: "end",
-          verticalPosition: "bottom",
-          duration: 5000,
-          direction: "ltr"
-        });
+        this._snackBar.trigger('Updated', 'close');
       }
     });
   }
